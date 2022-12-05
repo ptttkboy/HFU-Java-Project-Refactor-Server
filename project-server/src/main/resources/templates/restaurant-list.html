@@ -70,7 +70,7 @@
 
                         <div class="card-body">
                             <a th:href="@{ /admin/restaurants/update(restaurantId=${ restaurant.id }) }" class="btn btn-primary">編輯</a>
-                            <a href="#" th:href="@{ /admin/restaurants/delete(restaurantId=${ restaurant.id }) }" class="btn btn-outline-danger">刪除</a>
+                            <a href="#" class="btn btn-outline-danger btn-delete" th:href="@{ /admin/restaurants/delete(restaurantId=${ restaurant.id }) }" >刪除</a>
                         </div>
                     </div>
                 </div>
@@ -80,6 +80,7 @@
 
     <!-- 頁尾 -->
     <footer th:insert="~{footer :: footer}"></footer>
-</body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script th:src="@{/js/restaurant-list.js}"></script>
+</body>
 </html>

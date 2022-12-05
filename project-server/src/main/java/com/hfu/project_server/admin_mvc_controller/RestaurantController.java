@@ -3,6 +3,7 @@ package com.hfu.project_server.admin_mvc_controller;
 import com.hfu.project_server.entity.Restaurant;
 import com.hfu.project_server.service.RestaurantService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/restaurants")
 @AllArgsConstructor
+@Slf4j
 public class RestaurantController {
     private final RestaurantService restaurantService;
 
@@ -23,7 +25,7 @@ public class RestaurantController {
      * 預處理已提交資料
      *
      * 當html中的input為空時，改成null。
-     * @param webDataBinder
+     * @param webDataBinder: input提交過來的資料
      */
     @InitBinder
     public void trimInput(WebDataBinder webDataBinder) {
@@ -117,6 +119,7 @@ public class RestaurantController {
      */
     @GetMapping("/delete")
     public String delete(@RequestParam("restaurantId") Long id) {
+        log.info("delete has been called");
         restaurantService.deleteRestaurantById(id);
         return "redirect:/admin/restaurants";
     }
