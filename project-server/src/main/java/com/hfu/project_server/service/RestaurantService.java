@@ -53,6 +53,10 @@ public interface RestaurantService {
      */
     void addRestaurant(Restaurant restaurant);
 
+    /**
+     * 更新餐廳資訊
+     * @param restaurant
+     */
     void updateRestaurant(Restaurant restaurant);
 
     /**
@@ -71,4 +75,6 @@ public interface RestaurantService {
      * @param id: 欲刪除的餐廳id。
      */
     void deleteRestaurantById(Long id);
+
+    List<Restaurant> getRestaurantByQueryApi(String nameQuery, String categoryQuery);
 }

@@ -1,11 +1,14 @@
 package com.hfu.project_server.rest_controller;
 
 import com.google.common.base.Strings;
+import com.hfu.project_server.entity.Restaurant;
 import com.hfu.project_server.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -21,16 +24,8 @@ public class RestaurantRestController {
             @RequestParam(name = "category", required = false) String category
     ) {
 
-        if(!Strings.isNullOrEmpty(name)) {
-            return ResponseEntity.ok()
-                    .body(restaurantService.getRestaurantByName(name));
-        }
-        if (!Strings.isNullOrEmpty(category)) {
-            return ResponseEntity.ok()
-                    .body(restaurantService.getRestaurantByCategory(category));
-        }
-        return ResponseEntity.ok()
-                .body(restaurantService.getRestaurants());
+        List<Restaurant> restaurants = restaurantService.getRestaurantByQueryApi(name, category);
+        return ResponseEntity.ok().body(restaurants);
     }
 
     @GetMapping("/restaurants/latest")

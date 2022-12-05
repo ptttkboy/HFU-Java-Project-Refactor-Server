@@ -35,9 +35,7 @@ public class RestaurantController {
 
     /**
      * 餐廳列表&搜尋
-     *
      * 在沒有提交搜尋內容時，會顯示所有餐廳列表頁面；當搜尋欄位有輸入值時，會讀取該值，並按名字尋找對應餐廳。
-     *
      * @param model: 所有餐廳
      * @return 餐廳列表頁面
      */
@@ -62,17 +60,13 @@ public class RestaurantController {
      */
     @GetMapping("/add")
     public String addForm(Model model) {
-
-        // 新增前需要帶一個空的model過去
         model.addAttribute("restaurant", new Restaurant());
-
         return "add-restaurant";
     }
 
     @PostMapping("/add")
     public String processAdd(@Valid @ModelAttribute("restaurant") Restaurant restaurant,
                              BindingResult bindingResult) {
-
         // 檢驗輸入
         if (bindingResult.hasErrors()) {
             return "add-restaurant";
@@ -114,12 +108,10 @@ public class RestaurantController {
 
     /**
      * 刪除餐廳
-     *
-     * TODO: 應該要先有個js的prompt來提示，比較安全。
      */
     @GetMapping("/delete")
     public String delete(@RequestParam("restaurantId") Long id) {
-        log.info("delete has been called");
+
         restaurantService.deleteRestaurantById(id);
         return "redirect:/admin/restaurants";
     }

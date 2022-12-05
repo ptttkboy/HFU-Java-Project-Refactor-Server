@@ -99,4 +99,23 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantRepository.deleteById(id);
         log.info("Delete: successfully delete 1 restaurant, id: {}", id);
     }
+
+    /**
+     * 獲取餐廳（API用）
+     * TODO:這方法太多餘，應該合併
+     */
+
+    @Override
+    public List<Restaurant> getRestaurantByQueryApi(String nameQuery, String categoryQuery) {
+
+        if (!Strings.isNullOrEmpty(nameQuery)){
+            return getRestaurantByName(nameQuery);
+        }
+
+        if (!Strings.isNullOrEmpty(categoryQuery)) {
+            return getRestaurantByCategory(categoryQuery);
+        }
+
+        return getRestaurants();
+    }
 }

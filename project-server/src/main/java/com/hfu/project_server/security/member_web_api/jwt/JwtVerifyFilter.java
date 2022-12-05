@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.hfu.project_server.exception.ApiExceptionFormat;
 import com.hfu.project_server.security.exception.JwtInvalidException;
+import com.hfu.project_server.utils.ResponseUtils;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Slf4j
 public class JwtVerifyFilter extends OncePerRequestFilter {
 
+    private static final int INVALID_TOKEN = 498;
     private final JwtProperties jwtProperties;
     private String memberEmail;
 
@@ -71,10 +73,14 @@ public class JwtVerifyFilter extends OncePerRequestFilter {
 
 
             } catch (JwtException e) {
-                // 失敗直接回傳錯誤訊息
-                log.warn("Jwt: Falied to Login, user: {} ; reason: {}", memberEmail, e.getMessage());
-                response.setStatus(498);
-                new ObjectMapper().writeValue(response.getOutputStream(), new ApiExceptionFormat(System.currentTimeMillis(), 498, e.getMessage()));
+
+                if (memberEmail == null) {
+                    ResponseUtils.exceptionWriter(response, HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+                    log.warn("Jwt: Failed to Login, unauthenticated/unauthorized user.");
+                } else {
+                    ResponseUtils.exceptionWriter(response, INVALID_TOKEN, e.getMessage() );
+                    log.warn("Jwt: Failed to Login, user: {} ; reason: {}", memberEmail, e.getMessage());
+                }
             }
 
             filterChain.doFilter(request, response);

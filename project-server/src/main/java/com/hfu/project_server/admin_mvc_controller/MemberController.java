@@ -30,9 +30,7 @@ public class MemberController {
 
     /**
      * TODO: 目前只能修改適用者的啟用狀態。
-     *
      * 修改會員資料
-     *
      * GET: 顯示修改頁面的表單。
      * POST: 提交修改。
      */
